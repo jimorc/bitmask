@@ -1,6 +1,6 @@
 # bitmask
 
-bitmask is a Dart package for a generic bitmask class.
+bitmask is a Dart package for a generic Bitmask class.
 
 Looking in pub.dev, there are two packages that are related to bitmasks:
 **enum_flag**, and **surf_util** which contains a Bitmask class. The **enum_flag** package is very barebones, and **surf_util** has been
