@@ -1,37 +1,61 @@
 /// A Bitmask class where each bit is specified by an enumeration value.
-class EnumeratedBitmask<E extends Enum> {
+class Bitmask {
   /// Construct a bitmask with no bits set.
-  EnumeratedBitmask();
+  ///
+  /// _numberOfBits_ is the number of bits in the BitMask. The maximum
+  /// value for this argument is 63 as that is the size of a bitmask that
+  /// can fit in an integer. This value should be no larger than 52 if
+  /// the BitMask is used on the Web because that is the largest size that
+  /// can be reliably set in Javascript.
+  ///
+  /// Throws ArgumentError is _numberOfBits_ is larger than 63.
+  Bitmask(int numberOfBits) {
+    if (numberOfBits > 63) {
+      throw ArgumentError('Bitmask constructor: Attempting to create a'
+          'Bitmask objet larger than 63 bits in size.');
+    }
+    for (var i = 0; i < numberOfBits; i++) {
+      _mask[i] = false;
+    }
+  }
 
   /// Get the bitmask as an integer.
-  int get flags =>
-      _mask.fold(0, (int value, E flag) => value | 1 << flag.index);
+  int get flags {
+    var result = 0;
+    for (var entry in _mask.entries) {
+      if (entry.value) {
+        result += (entry.value) ? 1 << entry.key : 0;
+      }
+    }
+    return result;
+  }
 
   /// Set the bit specified by the enumeration value to 1 (true).
-  void set(E bit) {
-    _mask.add(bit);
+  void set(int bit) {
+    _mask[bit] = true;
   }
 
   /// Check if a bit is set.
   ///
   /// Returns true if the bit is set, and false if the bit is not set.
-  bool isSet(E bit) {
-    return _mask.contains(bit);
+  bool isSet(int bit) {
+    for (var entry in _mask.entries) {
+      if (bit == entry.key) {
+        return entry.value;
+      }
+    }
+    return false;
   }
 
   /// Get the setting of a bit.
   ///
   /// Returns true if the bit is set, and false if the bit is not set.
-  bool operator [](E bit) => isSet(bit);
+  bool operator [](int bit) => isSet(bit);
 
   /// Set a bit to 1 (true) or 0 (false).
-  operator []=(E bit, bool value) {
-    if (value) {
-      _mask.add(bit);
-    } else {
-      _mask.remove(bit);
-    }
+  operator []=(int bit, bool value) {
+    _mask[bit] = value;
   }
 
-  final Set<E> _mask = <E>{};
+  final Map<int, bool> _mask = <int, bool>{};
 }

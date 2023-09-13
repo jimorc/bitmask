@@ -11,53 +11,53 @@ enum MaskBits {
 void main() {
   group('A group of tests', () {
     test('empty constructor', () {
-      var mask = EnumeratedBitmask<MaskBits>();
+      var mask = Bitmask(MaskBits.values.length);
       expect(mask.flags, 0);
     });
 
     test('set a bit', () {
-      var mask = EnumeratedBitmask<MaskBits>();
-      mask.set(MaskBits.two);
+      var mask = Bitmask(MaskBits.values.length);
+      mask.set(MaskBits.two.index);
       expect(mask.flags, 4);
-      mask.set(MaskBits.zero);
+      mask.set(MaskBits.zero.index);
       expect(mask.flags, 5);
     });
 
     test('isSet', () {
-      var mask = EnumeratedBitmask();
-      mask.set(MaskBits.one);
-      mask.set(MaskBits.three);
-      expect(mask.isSet(MaskBits.zero), false);
-      expect(mask.isSet(MaskBits.one), true);
-      expect(mask.isSet(MaskBits.two), false);
-      expect(mask.isSet(MaskBits.three), true);
+      var mask = Bitmask(MaskBits.values.length);
+      mask.set(MaskBits.one.index);
+      mask.set(MaskBits.three.index);
+      expect(mask.isSet(MaskBits.zero.index), false);
+      expect(mask.isSet(MaskBits.one.index), true);
+      expect(mask.isSet(MaskBits.two.index), false);
+      expect(mask.isSet(MaskBits.three.index), true);
     });
 
     test('operator []', () {
-      var mask = EnumeratedBitmask();
-      mask.set(MaskBits.one);
-      mask.set(MaskBits.three);
-      expect(mask[MaskBits.zero], false);
-      expect(mask[MaskBits.one], true);
-      expect(mask[MaskBits.two], false);
-      expect(mask[MaskBits.three], true);
+      var mask = Bitmask(MaskBits.values.length);
+      mask.set(MaskBits.one.index);
+      mask.set(MaskBits.three.index);
+      expect(mask[MaskBits.zero.index], false);
+      expect(mask[MaskBits.one.index], true);
+      expect(mask[MaskBits.two.index], false);
+      expect(mask[MaskBits.three.index], true);
     });
 
     test('operator []= to set a bit', () {
-      var mask = EnumeratedBitmask();
-      mask[MaskBits.one] = true;
-      mask[MaskBits.three] = true;
-      expect(mask.isSet(MaskBits.zero), false);
-      expect(mask.isSet(MaskBits.one), true);
-      expect(mask.isSet(MaskBits.two), false);
-      expect(mask.isSet(MaskBits.three), true);
+      var mask = Bitmask(MaskBits.values.length);
+      mask[MaskBits.one.index] = true;
+      mask[MaskBits.three.index] = true;
+      expect(mask.isSet(MaskBits.zero.index), false);
+      expect(mask.isSet(MaskBits.one.index), true);
+      expect(mask.isSet(MaskBits.two.index), false);
+      expect(mask.isSet(MaskBits.three.index), true);
 
-      mask[MaskBits.two] = false;
-      mask[MaskBits.three] = false;
-      expect(mask.isSet(MaskBits.zero), false);
-      expect(mask.isSet(MaskBits.one), true);
-      expect(mask.isSet(MaskBits.two), false);
-      expect(mask.isSet(MaskBits.three), false);
+      mask[MaskBits.two.index] = false;
+      mask[MaskBits.three.index] = false;
+      expect(mask.isSet(MaskBits.zero.index), false);
+      expect(mask.isSet(MaskBits.one.index), true);
+      expect(mask.isSet(MaskBits.two.index), false);
+      expect(mask.isSet(MaskBits.three.index), false);
     });
   });
 }
