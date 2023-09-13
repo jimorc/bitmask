@@ -15,25 +15,35 @@ void main() {
       expect(mask.flags, 0);
     });
 
-    test('or enumerated bit', () {
+    test('set a bit', () {
       var mask = EnumeratedBitmask<MaskBits>();
-      mask |= MaskBits.two;
+      mask.set(MaskBits.two);
       expect(mask.flags, 4);
-      mask |= MaskBits.zero;
+      mask.set(MaskBits.zero);
       expect(mask.flags, 5);
     });
 
     test('isSet', () {
       var mask = EnumeratedBitmask();
-      mask |= MaskBits.one;
-      mask |= MaskBits.three;
+      mask.set(MaskBits.one);
+      mask.set(MaskBits.three);
       expect(mask.isSet(MaskBits.zero), false);
       expect(mask.isSet(MaskBits.one), true);
       expect(mask.isSet(MaskBits.two), false);
       expect(mask.isSet(MaskBits.three), true);
     });
 
-    test('operator [] to set a bit', () {
+    test('operator []', () {
+      var mask = EnumeratedBitmask();
+      mask.set(MaskBits.one);
+      mask.set(MaskBits.three);
+      expect(mask[MaskBits.zero], false);
+      expect(mask[MaskBits.one], true);
+      expect(mask[MaskBits.two], false);
+      expect(mask[MaskBits.three], true);
+    });
+
+    test('operator []= to set a bit', () {
       var mask = EnumeratedBitmask();
       mask[MaskBits.one] = true;
       mask[MaskBits.three] = true;
