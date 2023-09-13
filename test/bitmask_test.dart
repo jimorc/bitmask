@@ -22,5 +22,15 @@ void main() {
       mask |= MaskBits.zero;
       expect(mask.flags, 5);
     });
+
+    test('isSet', () {
+      var mask = EnumeratedBitmask();
+      mask |= MaskBits.one;
+      mask |= MaskBits.three;
+      expect(mask.isSet(MaskBits.zero), false);
+      expect(mask.isSet(MaskBits.one), true);
+      expect(mask.isSet(MaskBits.two), false);
+      expect(mask.isSet(MaskBits.three), true);
+    });
   });
 }

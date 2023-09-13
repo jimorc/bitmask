@@ -13,5 +13,10 @@ class EnumeratedBitmask<E extends Enum> {
     return this;
   }
 
+  /// Check if a bit is set.
+  bool isSet(E bit) {
+    return _mask.contains(bit);
+  }
+
   final Set<E> _mask = <E>{};
 }
