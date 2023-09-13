@@ -40,6 +40,10 @@ class Bitmask {
 
   /// Set the bit specified by the enumeration value to 1 (true).
   void set(int bit) {
+    if (bit < 0 || bit > _mask.length - 1) {
+      throw ArgumentError('BitMask.set: Request to set bit \'$bit\' which'
+          'is invalid.');
+    }
     _mask[bit] = true;
   }
 

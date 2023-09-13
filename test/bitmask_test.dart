@@ -31,6 +31,14 @@ void main() {
       expect(mask.flags, 5);
     });
 
+    test('set invalid bit', () {
+      var mask = Bitmask(MaskBits.values.length);
+      expect(() => mask.set(-1), throwsA(isArgumentError));
+      mask.set(0);
+      expect(mask.flags, 1);
+      expect(() => mask.set(4), throwsA(isArgumentError));
+    });
+
     test('isSet', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.one.index);
