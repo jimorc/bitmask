@@ -15,6 +15,14 @@ void main() {
       expect(mask.flags, 0);
     });
 
+    (test('invalid Bitmask sizes', () {
+      expect(() => Bitmask(-1), throwsA(isArgumentError));
+      expect(() => Bitmask(0), throwsA(isArgumentError));
+      expect(Bitmask(1).flags, 0);
+      expect(Bitmask(63).flags, 0);
+      expect(() => Bitmask(64).flags, throwsA(isArgumentError));
+    }));
+
     test('set a bit', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.two.index);
