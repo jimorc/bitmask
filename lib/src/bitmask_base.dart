@@ -14,8 +14,19 @@ class EnumeratedBitmask<E extends Enum> {
   }
 
   /// Check if a bit is set.
+  ///
+  /// Returns true if the bit is set, and false if the bit is not set.
   bool isSet(E bit) {
     return _mask.contains(bit);
+  }
+
+  /// Set a bit to 1 (true) or 0 (false).
+  operator []=(E bit, bool value) {
+    if (value) {
+      _mask.add(bit);
+    } else {
+      _mask.remove(bit);
+    }
   }
 
   final Set<E> _mask = <E>{};
