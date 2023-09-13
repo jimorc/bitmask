@@ -12,15 +12,15 @@ void main() {
   group('A group of tests', () {
     test('empty constructor', () {
       var mask = EnumeratedBitmask<MaskBits>();
-      expect(mask.toInt(), 0);
+      expect(mask.flags, 0);
     });
 
-    test('set enumerated bit', () {
+    test('or enumerated bit', () {
       var mask = EnumeratedBitmask<MaskBits>();
       mask |= MaskBits.two;
-      expect(mask.toInt(), 4);
+      expect(mask.flags, 4);
       mask |= MaskBits.zero;
-      expect(mask.toInt(), 5);
+      expect(mask.flags, 5);
     });
   });
 }

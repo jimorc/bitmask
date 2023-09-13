@@ -4,13 +4,14 @@ class EnumeratedBitmask<E extends Enum> {
   EnumeratedBitmask();
 
   /// Get the bitmask as an integer.
-  int toInt() => _mask;
+  int get flags =>
+      _mask.fold(0, (int value, E flag) => value | 1 << flag.index);
 
   /// Set the bit specified by the enumeration value.
   operator |(E bit) {
-    _mask |= 1 << bit.index;
+    _mask.add(bit);
     return this;
   }
 
-  int _mask = 0;
+  final Set<E> _mask = <E>{};
 }
