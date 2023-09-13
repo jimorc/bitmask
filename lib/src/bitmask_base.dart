@@ -51,6 +51,10 @@ class Bitmask {
   ///
   /// Returns true if the bit is set, and false if the bit is not set.
   bool isSet(int bit) {
+    if (bit < 0 || bit > _mask.length - 1) {
+      throw ArgumentError('Bitmask.isSet: Request to check bit: \'$bit\''
+          ' is invalid.');
+    }
     for (var entry in _mask.entries) {
       if (bit == entry.key) {
         return entry.value;

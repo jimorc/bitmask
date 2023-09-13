@@ -49,6 +49,13 @@ void main() {
       expect(mask.isSet(MaskBits.three.index), true);
     });
 
+    test('invalid bit in isSet', () {
+      var mask = Bitmask(MaskBits.values.length);
+      expect(() => mask.isSet(-1), throwsA(isArgumentError));
+      var _ = mask.isSet(0);
+      expect(() => mask.isSet(4), throwsA(isArgumentError));
+    });
+
     test('operator []', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.one.index);
