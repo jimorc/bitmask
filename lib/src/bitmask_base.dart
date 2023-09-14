@@ -174,6 +174,19 @@ class Bitmask {
     return newMask;
   }
 
+  /// Hash code of this object.
+  @override
+  int get hashCode => flags.hashCode;
+
+  /// Equality operator.
+  ///
+  /// For two Bitmasks to be equal, they must be the same size and have
+  /// all of the same bits set and unset.
+  @override
+  bool operator ==(Object other) {
+    return other is Bitmask && length == other.length && flags == other.flags;
+  }
+
   /// The number of bits in the mask.
   int get length => _mask.length;
 

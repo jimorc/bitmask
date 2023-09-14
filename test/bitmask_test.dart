@@ -165,5 +165,25 @@ void main() {
       var mask2 = Bitmask(6);
       expect(() => mask ^ mask2, throwsA(isArgumentError));
     });
+
+    test('operator ==', () {
+      var mask = Bitmask(4);
+      expect(mask == mask, true);
+
+      var object = Object();
+      expect(mask == object, false);
+
+      var mask2 = Bitmask(4);
+      expect(mask == mask2, true);
+
+      mask[1] = true;
+      expect(mask == mask2, false);
+
+      var mask3 = Bitmask(6);
+      expect(mask == mask3, false);
+
+      mask2[2] = true;
+      expect(mask == mask2, false);
+    });
   });
 }
