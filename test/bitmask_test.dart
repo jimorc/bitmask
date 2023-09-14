@@ -23,6 +23,20 @@ void main() {
       expect(() => Bitmask(64).flags, throwsA(isArgumentError));
     }));
 
+    test('fromInt', () {
+      var bits = 13;
+      var mask = Bitmask.fromInt(bits, 6);
+      expect(mask.flags, bits);
+    });
+
+    test('fromInt invalid size', () {
+      expect(() => Bitmask.fromInt(13, 0), throwsA(isArgumentError));
+      expect(() => Bitmask.fromInt(13, -1), throwsA(isArgumentError));
+      expect(() => Bitmask.fromInt(13, 64), throwsA(isArgumentError));
+      expect(Bitmask.fromInt(13, 1).flags, 1);
+      expect(Bitmask.fromInt(13, 63).flags, 13);
+    });
+
     test('set a bit', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.two.index);

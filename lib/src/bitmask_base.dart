@@ -26,6 +26,34 @@ class Bitmask {
     }
   }
 
+  /// Create a Bitmask from an integer value.
+  ///
+  /// _bits_ is the integer value to create the Bitmask for.
+  ///
+  /// _size_ is the number of bits in the Bitmask. No check is made to
+  /// ensure that the size of the Bitmask is large enough to hold all
+  /// of the bits in _bits_. The minimum
+  /// value for this argument is 1; a Bitmask of zero or a negative
+  /// size does not make sense. The maximum
+  /// value for this argument is 63 as that is the size of a bitmask that
+  /// can fit in an integer. This value should be no larger than 52 if
+  /// the BitMask is used on the Web because that is the largest size that
+  /// can be reliably set in Javascript.
+  ///
+  /// throws ArgumentError is _size_ is not between 1 and 63.
+  factory Bitmask.fromInt(int bits, int size) {
+    if (size < 1 || size > 63) {
+      throw ArgumentError('Bitmask.fromInt: Bitmask size must be between'
+          ' 1 and 63.');
+    }
+    Bitmask mask = Bitmask(size);
+    for (int i = 0; i < size; i++) {
+      mask[i] = bits & 1 == 1;
+      bits >>= 1;
+    }
+    return mask;
+  }
+
   /// Get the bitmask as an integer.
   int get flags {
     var result = 0;
