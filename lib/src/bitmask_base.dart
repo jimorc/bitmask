@@ -1,4 +1,6 @@
-/// A Bitmask class where each bit is specified by an enumeration value.
+const int _minimumBitmaskSize = 1;
+const int _maximumBitmaskSize = 63;
+
 class Bitmask {
   /// Construct a bitmask with no bits set.
   ///
@@ -13,11 +15,11 @@ class Bitmask {
   /// Throws ArgumentError if the bit number is invalid (< 1 or greater
   /// than 63).
   Bitmask(int numberOfBits) {
-    if (numberOfBits < 1) {
+    if (numberOfBits < _minimumBitmaskSize) {
       throw ArgumentError('Bitmask constructor: Attempting to create a '
           "Bitmask size less than one bit.");
     }
-    if (numberOfBits > 63) {
+    if (numberOfBits > _maximumBitmaskSize) {
       throw ArgumentError('Bitmask constructor: Attempting to create a '
           'Bitmask size larger than 63 bits in size.');
     }
@@ -42,7 +44,7 @@ class Bitmask {
   ///
   /// throws ArgumentError is _size_ is not between 1 and 63.
   factory Bitmask.fromInt(int bits, int size) {
-    if (size < 1 || size > 63) {
+    if (size < _minimumBitmaskSize || size > _maximumBitmaskSize) {
       throw ArgumentError('Bitmask.fromInt: Bitmask size must be between'
           ' 1 and 63.');
     }
@@ -65,13 +67,13 @@ class Bitmask {
   /// Throws ArgumentError if any entry in _bits_ is outside the range
   /// of 0 and _size_ - 1.
   factory Bitmask.fromList(List<int> bits, int size) {
-    if (size < 1 || size > 63) {
+    if (size < _minimumBitmaskSize || size > _maximumBitmaskSize) {
       throw ArgumentError('Bitmask.fromList: Bitmask size must be between'
           ' 1 and 63.');
     }
     var mask = Bitmask(size);
     for (var bit in bits) {
-      if (bit < 0 || bit >= size) {
+      if (bit < _minimumBitmaskSize - 1 || bit >= size) {
         throw ArgumentError('Bitmask.fromList: Attempting to set a bit '
             'that is less than 0 or greater than the size of the Bitmask.');
       }
@@ -96,7 +98,7 @@ class Bitmask {
   /// Throws ArgumentError if the bit number is invalid (< 0 or greater
   /// than the number of bits in the mask).
   void set(int bit) {
-    if (bit < 0 || bit > _mask.length - 1) {
+    if (bit < _minimumBitmaskSize - 1 || bit > _mask.length - 1) {
       throw ArgumentError('BitMask.set: Request to set bit \'$bit\' which'
           'is invalid.');
     }
@@ -110,7 +112,7 @@ class Bitmask {
   /// Throws ArgumentError if the bit number is invalid (< 0 or greater
   /// than the number of bits in the mask).
   bool isSet(int bit) {
-    if (bit < 0 || bit > _mask.length - 1) {
+    if (bit < _minimumBitmaskSize - 1 || bit > _mask.length - 1) {
       throw ArgumentError('Bitmask.isSet: Request to check bit: \'$bit\''
           ' is invalid.');
     }
@@ -136,7 +138,7 @@ class Bitmask {
   /// Throws ArgumentError if the bit number is invalid (< 0 or greater
   /// than the number of bits in the mask).
   operator []=(int bit, bool value) {
-    if (bit < 0 || bit >= _mask.length) {
+    if (bit < _minimumBitmaskSize - 1 || bit >= _mask.length) {
       throw ArgumentError('Bitmask.operator []=: Request to set bit: '
           '\'$bit\' is invalid.');
     }
