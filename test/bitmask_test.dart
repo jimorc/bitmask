@@ -205,5 +205,24 @@ void main() {
       mask2[2] = true;
       expect(mask != mask2, true);
     });
+
+    test('fromList', () {
+      var mask = Bitmask.fromList([1, 3, 5], 8);
+      expect(mask.flags, 42);
+    });
+
+    test('invalid input in fromList', () {
+      // test various mask sizes
+      expect(() => Bitmask.fromList([], -1), throwsA(isArgumentError));
+      expect(() => Bitmask.fromList([], 0), throwsA(isArgumentError));
+      var _ = Bitmask.fromList([], 1);
+      _ = Bitmask.fromList([], 63);
+      expect(() => Bitmask.fromList([], 64), throwsA(isArgumentError));
+
+      // test invalid bits in list
+      expect(() => Bitmask.fromList([4, -1, 5], 6), throwsA(isArgumentError));
+      expect(() => Bitmask.fromList([4, 1, 6], 6), throwsA(isArgumentError));
+      _ = Bitmask.fromList([0, 5], 6);
+    });
   });
 }

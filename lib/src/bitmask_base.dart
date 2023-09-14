@@ -54,6 +54,32 @@ class Bitmask {
     return mask;
   }
 
+  /// Create Bitmask with bits specified in a list set.
+  ///
+  /// _bits_ is the list of bits to set.
+  ///
+  /// _size_ is the number of bits in this Bitmask.
+  ///
+  /// Throws ArgumentError if _size_ is not between 1 and 63.
+  ///
+  /// Throws ArgumentError if any entry in _bits_ is outside the range
+  /// of 0 and _size_ - 1.
+  factory Bitmask.fromList(List<int> bits, int size) {
+    if (size < 1 || size > 63) {
+      throw ArgumentError('Bitmask.fromList: Bitmask size must be between'
+          ' 1 and 63.');
+    }
+    var mask = Bitmask(size);
+    for (var bit in bits) {
+      if (bit < 0 || bit >= size) {
+        throw ArgumentError('Bitmask.fromList: Attempting to set a bit '
+            'that is less than 0 or greater than the size of the Bitmask.');
+      }
+      mask[bit] = true;
+    }
+    return mask;
+  }
+
   /// Get the bitmask as an integer.
   int get flags {
     var result = 0;
