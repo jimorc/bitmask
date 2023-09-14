@@ -10,9 +10,8 @@ class Bitmask {
   /// the BitMask is used on the Web because that is the largest size that
   /// can be reliably set in Javascript.
   ///
-  /// Throws ArgumentError if _numberOfBits_ is less than 1.
-  ///
-  /// Throws ArgumentError if _numberOfBits_ is larger than 63.
+  /// Throws ArgumentError if the bit number is invalid (< 1 or greater
+  /// than 63).
   Bitmask(int numberOfBits) {
     if (numberOfBits < 1) {
       throw ArgumentError('Bitmask constructor: Attempting to create a '
@@ -39,6 +38,9 @@ class Bitmask {
   }
 
   /// Set the bit specified by the enumeration value to 1 (true).
+  ///
+  /// Throws ArgumentError if the bit number is invalid (< 0 or greater
+  /// than the number of bits in the mask).
   void set(int bit) {
     if (bit < 0 || bit > _mask.length - 1) {
       throw ArgumentError('BitMask.set: Request to set bit \'$bit\' which'
@@ -50,6 +52,9 @@ class Bitmask {
   /// Check if a bit is set.
   ///
   /// Returns true if the bit is set, and false if the bit is not set.
+  ///
+  /// Throws ArgumentError if the bit number is invalid (< 0 or greater
+  /// than the number of bits in the mask).
   bool isSet(int bit) {
     if (bit < 0 || bit > _mask.length - 1) {
       throw ArgumentError('Bitmask.isSet: Request to check bit: \'$bit\''
@@ -66,10 +71,21 @@ class Bitmask {
   /// Get the setting of a bit.
   ///
   /// Returns true if the bit is set, and false if the bit is not set.
+  /// than the number of bits in the mask).
+  ///
+  /// Throws ArgumentError if the bit number is invalid (< 0 or greater
+  /// than the number of bits in the mask).
   bool operator [](int bit) => isSet(bit);
 
   /// Set a bit to 1 (true) or 0 (false).
+  ///
+  /// Throws ArgumentError if the bit number is invalid (< 0 or greater
+  /// than the number of bits in the mask).
   operator []=(int bit, bool value) {
+    if (bit < 0 || bit >= _mask.length) {
+      throw ArgumentError('Bitmask.operator []=: Request to set bit: '
+          '\'$bit\' is invalid.');
+    }
     _mask[bit] = value;
   }
 

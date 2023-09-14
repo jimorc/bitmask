@@ -9,7 +9,7 @@ enum MaskBits {
 }
 
 void main() {
-  group('A group of tests', () {
+  group('Bitmask tests', () {
     test('empty constructor', () {
       var mask = Bitmask(MaskBits.values.length);
       expect(mask.flags, 0);
@@ -81,6 +81,13 @@ void main() {
       expect(mask.isSet(MaskBits.one.index), true);
       expect(mask.isSet(MaskBits.two.index), false);
       expect(mask.isSet(MaskBits.three.index), false);
+    });
+
+    test('invalid bit in operator []=', () {
+      var mask = Bitmask(MaskBits.values.length);
+      expect(() => mask[-1] = true, throwsA(isArgumentError));
+      var _ = mask.isSet(0);
+      expect(() => mask[4] = true, throwsA(isArgumentError));
     });
   });
 }
