@@ -66,6 +66,14 @@ void main() {
       expect(mask[MaskBits.three.index], true);
     });
 
+    test('invalid bit in []', () {
+      var mask = Bitmask(MaskBits.values.length);
+      expect(() => mask[-1], throwsA(isArgumentError));
+      mask.set(0);
+      expect(mask.flags, 1);
+      expect(() => mask[4], throwsA(isArgumentError));
+    });
+
     test('operator []= to set a bit', () {
       var mask = Bitmask(MaskBits.values.length);
       mask[MaskBits.one.index] = true;
