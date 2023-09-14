@@ -185,5 +185,25 @@ void main() {
       mask2[2] = true;
       expect(mask == mask2, false);
     });
+
+    test('operator !=', () {
+      var mask = Bitmask(4);
+      expect(mask != mask, false);
+
+      var object = Object();
+      expect(mask != object, true);
+
+      var mask2 = Bitmask(4);
+      expect(mask != mask2, false);
+
+      mask[1] = true;
+      expect(mask != mask2, true);
+
+      var mask3 = Bitmask(6);
+      expect(mask != mask3, true);
+
+      mask2[2] = true;
+      expect(mask != mask2, true);
+    });
   });
 }
