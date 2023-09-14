@@ -135,5 +135,21 @@ void main() {
       var mask2 = Bitmask(6);
       expect(() => mask | mask2, throwsA(isArgumentError));
     });
+
+    test('bitwise XOR of two Bitmasks', () {
+      var mask = Bitmask(MaskBits.values.length);
+      mask[MaskBits.one.index] = true;
+      mask[MaskBits.three.index] = true;
+      var mask2 = Bitmask(MaskBits.values.length);
+      mask2[MaskBits.two.index] = true;
+      mask2[MaskBits.one.index] = true;
+      expect((mask ^ mask2).flags, 12);
+    });
+
+    test('bitwise XOR of two Bitmasks that are not same size', () {
+      var mask = Bitmask(4);
+      var mask2 = Bitmask(6);
+      expect(() => mask ^ mask2, throwsA(isArgumentError));
+    });
   });
 }

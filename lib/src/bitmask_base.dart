@@ -130,6 +130,22 @@ class Bitmask {
     return newMask;
   }
 
+  /// Create a Bitmask that is the bitwise XOR of one Bitmask with another.
+  ///
+  /// Throws ArgumentError if the Bitmasks are not the same size.
+  Bitmask operator ^(Bitmask other) {
+    if (length != other.length) {
+      throw ArgumentError('Bitmask.operator |: Attempting to do a bitwise'
+          ' AND of two Bitmasks that are not the same size.');
+    }
+    Bitmask newMask = this;
+    for (var entry in other._mask.entries) {
+      newMask._mask[entry.key] =
+          (newMask._mask[entry.key] ?? false) ^ entry.value;
+    }
+    return newMask;
+  }
+
   /// The number of bits in the mask.
   int get length => _mask.length;
 
