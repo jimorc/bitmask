@@ -89,5 +89,14 @@ class Bitmask {
     _mask[bit] = value;
   }
 
+  /// Create a Bitmask of the bitwise complement of this object.
+  Bitmask operator ~() {
+    var newMask = this;
+    for (var entry in newMask._mask.entries) {
+      newMask._mask[entry.key] = !entry.value;
+    }
+    return newMask;
+  }
+
   final Map<int, bool> _mask = <int, bool>{};
 }

@@ -97,5 +97,13 @@ void main() {
       var _ = mask.isSet(0);
       expect(() => mask[4] = true, throwsA(isArgumentError));
     });
+
+    test('operator ~', () {
+      var mask = Bitmask(MaskBits.values.length);
+      mask[MaskBits.one.index] = true;
+      mask[MaskBits.three.index] = true;
+      var mask2 = ~mask;
+      expect(mask2.flags, 5);
+    });
   });
 }
