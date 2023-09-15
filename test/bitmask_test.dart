@@ -119,6 +119,7 @@ void main() {
       mask[MaskBits.three.index] = true;
       var mask2 = ~mask;
       expect(mask2.flags, 5);
+      expect(identical(mask, mask2), false);
     });
 
     test('bitwise AND of two Bitmasks', () {
@@ -128,6 +129,7 @@ void main() {
       var mask2 = Bitmask(MaskBits.values.length);
       mask2[MaskBits.one.index] = true;
       expect((mask & mask2).flags, 2);
+      expect(identical(mask, mask2), false);
     });
 
     test('bitwise AND of two Bitmasks that are not same size', () {
@@ -143,6 +145,7 @@ void main() {
       var mask2 = Bitmask(MaskBits.values.length);
       mask2[MaskBits.two.index] = true;
       expect((mask | mask2).flags, 14);
+      expect(identical(mask, mask2), false);
     });
 
     test('bitwise OR of two Bitmasks that are not same size', () {
@@ -159,6 +162,7 @@ void main() {
       mask2[MaskBits.two.index] = true;
       mask2[MaskBits.one.index] = true;
       expect((mask ^ mask2).flags, 12);
+      expect(identical(mask, mask2), false);
     });
 
     test('bitwise XOR of two Bitmasks that are not same size', () {
@@ -224,6 +228,16 @@ void main() {
       expect(() => Bitmask.fromList([4, -1, 5], 6), throwsA(isArgumentError));
       expect(() => Bitmask.fromList([4, 1, 6], 6), throwsA(isArgumentError));
       _ = Bitmask.fromList([0, 5], 6);
+    });
+
+    test('fromBitmask', () {
+      var mask = Bitmask.fromList([1, 3, 5], 6);
+      var mask2 = Bitmask.fromBitmask(mask);
+      expect(mask2 == mask, true);
+      expect(identical(mask, mask2), false);
+      mask.unSet(3);
+      expect(mask != mask2, true);
+      expect(identical(mask, mask2), false);
     });
   });
 }

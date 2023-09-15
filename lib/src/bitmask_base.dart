@@ -80,6 +80,20 @@ class Bitmask {
     return mask;
   }
 
+  /// Create a Bitmask object that is a copy of another Bitmask object.
+  ///
+  /// This constructor is required because with
+  /// ```dart
+  /// var mask2 = mask1;
+  /// ```
+  /// both _mask1_ and _mask2_ point to the same object, not different objects
+  /// with the same content. Also, dart does
+  /// not allow overriding _operator =_, so we can't override it to
+  /// produce the result that we want.
+  factory Bitmask.fromBitmask(Bitmask other) {
+    return Bitmask.fromInt(other.flags, other.length);
+  }
+
   /// Get the bitmask as an integer.
   int get flags {
     var result = 0;
@@ -152,7 +166,7 @@ class Bitmask {
 
   /// Create a Bitmask of the bitwise complement of this object.
   Bitmask operator ~() {
-    var newMask = this;
+    var newMask = Bitmask.fromBitmask(this);
     for (var bit = 0; bit < _mask.length; bit++) {
       newMask[bit] = !_mask[bit];
     }
@@ -167,9 +181,9 @@ class Bitmask {
       throw ArgumentError('Bitmask.operator &: Attempting to do a bitwise'
           ' AND of two Bitmasks that are not the same size.');
     }
-    Bitmask newMask = this;
+    Bitmask newMask = Bitmask.fromBitmask(this);
     for (int bit = 0; bit < _mask.length; bit++) {
-      newMask[bit] = newMask[bit] & other[bit];
+      newMask[bit] &= other[bit];
     }
     return newMask;
   }
@@ -182,9 +196,9 @@ class Bitmask {
       throw ArgumentError('Bitmask.operator |: Attempting to do a bitwise'
           ' AND of two Bitmasks that are not the same size.');
     }
-    Bitmask newMask = this;
-    for (var bit = 0; bit < length; bit++) {
-      newMask[bit] = newMask[bit] | other[bit];
+    Bitmask newMask = Bitmask.fromBitmask(this);
+    for (var bit = 0; bit < _mask.length; bit++) {
+      newMask[bit] |= other[bit];
     }
     return newMask;
   }
@@ -197,9 +211,9 @@ class Bitmask {
       throw ArgumentError('Bitmask.operator |: Attempting to do a bitwise'
           ' AND of two Bitmasks that are not the same size.');
     }
-    Bitmask newMask = this;
+    Bitmask newMask = Bitmask.fromBitmask(this);
     for (var bit = 0; bit < length; bit++) {
-      newMask[bit] = newMask[bit] ^ other[bit];
+      newMask[bit] ^= other[bit];
     }
     return newMask;
   }
