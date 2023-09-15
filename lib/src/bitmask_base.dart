@@ -23,9 +23,7 @@ class Bitmask {
       throw ArgumentError('Bitmask constructor: Attempting to create a '
           'Bitmask size larger than 63 bits in size.');
     }
-    for (var i = 0; i < numberOfBits; i++) {
-      _mask[i] = false;
-    }
+    _mask = List<bool>.filled(numberOfBits, false);
   }
 
   /// Create a Bitmask from an integer value.
@@ -85,15 +83,15 @@ class Bitmask {
   /// Get the bitmask as an integer.
   int get flags {
     var result = 0;
-    for (var entry in _mask.entries) {
-      if (entry.value) {
-        result += (entry.value) ? 1 << entry.key : 0;
+    for (var bit = 0; bit < _mask.length; bit++) {
+      if (_mask[bit]) {
+        result += 1 << bit;
       }
     }
     return result;
   }
 
-  /// Set the bit specified by the enumeration value to 1 (true).
+  /// Set the bit specified by _bit_ to 1 (true).
   ///
   /// Throws ArgumentError if the bit number is invalid (< 0 or greater
   /// than the number of bits in the mask).
@@ -103,6 +101,18 @@ class Bitmask {
           'is invalid.');
     }
     _mask[bit] = true;
+  }
+
+  // Set the bit specified by _bit_ to 0 (false).
+  ///
+  /// Throws ArgumentError if the bit number is invalid (< 0 or greater
+  /// than the number of bits in the mask).
+  void unSet(int bit) {
+    if (bit < _minimumBitmaskSize - 1 || bit > _mask.length - 1) {
+      throw ArgumentError('BitMask.set: Request to set bit \'$bit\' which'
+          'is invalid.');
+    }
+    _mask[bit] = false;
   }
 
   /// Check if a bit is set.
@@ -116,12 +126,7 @@ class Bitmask {
       throw ArgumentError('Bitmask.isSet: Request to check bit: \'$bit\''
           ' is invalid.');
     }
-    for (var entry in _mask.entries) {
-      if (bit == entry.key) {
-        return entry.value;
-      }
-    }
-    return false;
+    return _mask[bit];
   }
 
   /// Get the setting of a bit.
@@ -148,8 +153,8 @@ class Bitmask {
   /// Create a Bitmask of the bitwise complement of this object.
   Bitmask operator ~() {
     var newMask = this;
-    for (var entry in newMask._mask.entries) {
-      newMask._mask[entry.key] = !entry.value;
+    for (var bit = 0; bit < _mask.length; bit++) {
+      newMask[bit] = !_mask[bit];
     }
     return newMask;
   }
@@ -163,9 +168,8 @@ class Bitmask {
           ' AND of two Bitmasks that are not the same size.');
     }
     Bitmask newMask = this;
-    for (var entry in other._mask.entries) {
-      newMask._mask[entry.key] =
-          (newMask._mask[entry.key] ?? false) & entry.value;
+    for (int bit = 0; bit < _mask.length; bit++) {
+      newMask[bit] = newMask[bit] & other[bit];
     }
     return newMask;
   }
@@ -179,9 +183,8 @@ class Bitmask {
           ' AND of two Bitmasks that are not the same size.');
     }
     Bitmask newMask = this;
-    for (var entry in other._mask.entries) {
-      newMask._mask[entry.key] =
-          (newMask._mask[entry.key] ?? false) | entry.value;
+    for (var bit = 0; bit < length; bit++) {
+      newMask[bit] = newMask[bit] | other[bit];
     }
     return newMask;
   }
@@ -195,9 +198,8 @@ class Bitmask {
           ' AND of two Bitmasks that are not the same size.');
     }
     Bitmask newMask = this;
-    for (var entry in other._mask.entries) {
-      newMask._mask[entry.key] =
-          (newMask._mask[entry.key] ?? false) ^ entry.value;
+    for (var bit = 0; bit < length; bit++) {
+      newMask[bit] = newMask[bit] ^ other[bit];
     }
     return newMask;
   }
@@ -218,5 +220,5 @@ class Bitmask {
   /// The number of bits in the mask.
   int get length => _mask.length;
 
-  final Map<int, bool> _mask = <int, bool>{};
+  late List<bool> _mask;
 }
