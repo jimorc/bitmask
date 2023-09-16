@@ -9,7 +9,7 @@ void main() {
   mask1.set(3); // same as mask1[3] = true;
   // set, then unset bit 5
   mask1[5] = true;
-  mask1.unSet(5); // same as mask1[5] = false;
+  mask1.unset(5); // same as mask1[5] = false;
 
   // sets bits 0, 2, and 3.
   var mask2 = Bitmask.fromInt(13, 6); // sets bits 0, 2, and 3.

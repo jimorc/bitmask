@@ -37,21 +37,21 @@ void main() {
       expect(Bitmask.fromInt(13, 63).flags, 13);
     });
 
-    test('unSet a bit', () {
+    test('unset a bit', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.two.index);
       mask.set(MaskBits.three.index);
       expect(mask.flags, 12);
-      mask.unSet(MaskBits.two.index);
+      mask.unset(MaskBits.two.index);
       expect(mask.flags, 8);
     });
 
-    test('unSet invalid bit', () {
+    test('unset invalid bit', () {
       var mask = Bitmask(MaskBits.values.length);
-      expect(() => mask.unSet(-1), throwsA(isArgumentError));
-      mask.unSet(0);
-      mask.unSet(3);
-      expect(() => mask.unSet(4), throwsA(isArgumentError));
+      expect(() => mask.unset(-1), throwsA(isArgumentError));
+      mask.unset(0);
+      mask.unset(3);
+      expect(() => mask.unset(4), throwsA(isArgumentError));
     });
 
     test('isSet', () {
@@ -235,7 +235,7 @@ void main() {
       var mask2 = Bitmask.fromBitmask(mask);
       expect(mask2 == mask, true);
       expect(identical(mask, mask2), false);
-      mask.unSet(3);
+      mask.unset(3);
       expect(mask != mask2, true);
       expect(identical(mask, mask2), false);
     });

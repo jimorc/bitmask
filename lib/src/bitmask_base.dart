@@ -249,7 +249,7 @@ class Bitmask {
   ///
   /// Throws ArgumentError if the bit number is invalid (< 0 or greater
   /// than the number of bits in the mask).
-  void unSet(int bit) {
+  void unset(int bit) {
     if (bit < _minimumBitmaskSize - 1 || bit > _mask.length - 1) {
       throw ArgumentError('BitMask.set: Request to set bit \'$bit\' which'
           'is invalid.');
