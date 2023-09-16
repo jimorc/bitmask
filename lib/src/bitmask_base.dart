@@ -23,7 +23,7 @@ class Bitmask {
       throw ArgumentError('Bitmask constructor: Attempting to create a '
           'Bitmask size larger than 63 bits in size.');
     }
-    _mask = List<bool>.filled(numberOfBits, false);
+    _mask = List<bool>.filled(numberOfBits, false, growable: false);
   }
 
   /// Create a Bitmask from an integer value.
@@ -92,6 +92,11 @@ class Bitmask {
   /// produce the result that we want.
   factory Bitmask.fromBitmask(Bitmask other) {
     return Bitmask.fromInt(other.flags, other.length);
+  }
+
+  /// Set all bits to false.
+  void clear() {
+    _mask = List<bool>.filled(_mask.length, false, growable: false);
   }
 
   /// Get the bitmask as an integer.

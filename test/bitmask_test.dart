@@ -239,5 +239,12 @@ void main() {
       expect(mask != mask2, true);
       expect(identical(mask, mask2), false);
     });
+
+    test('clear', () {
+      var mask = Bitmask.fromList([1, 3, 5], 6);
+      expect(mask.flags, 42);
+      mask.clear();
+      expect(mask.flags, 0);
+    });
   });
 }
