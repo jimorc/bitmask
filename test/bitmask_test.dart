@@ -37,6 +37,21 @@ void main() {
       expect(Bitmask.fromInt(13, 63).flags, 13);
     });
 
+    test('set a bit', () {
+      var mask = Bitmask(MaskBits.values.length);
+      mask.set(MaskBits.two.index);
+      mask.set(MaskBits.three.index);
+      expect(mask.flags, 12);
+    });
+
+    test('set invalid bit', () {
+      var mask = Bitmask(MaskBits.values.length);
+      expect(() => mask.set(-1), throwsA(isArgumentError));
+      mask.set(0);
+      mask.set(3);
+      expect(() => mask.set(4), throwsA(isArgumentError));
+    });
+
     test('unset a bit', () {
       var mask = Bitmask(MaskBits.values.length);
       mask.set(MaskBits.two.index);
@@ -245,6 +260,12 @@ void main() {
       expect(mask.flags, 42);
       mask.clear();
       expect(mask.flags, 0);
+    });
+
+    test('hashcode', () {
+      var mask = Bitmask.fromList([1, 3, 5], 6);
+      expect(mask.flags, 42);
+      expect(mask.hashCode, 42.hashCode);
     });
   });
 }
