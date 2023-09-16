@@ -46,6 +46,11 @@ const int _maximumBitmaskSize = 63;
 /// ```dash
 /// mask9.clear();  // mask9 now contains all zeroes.
 /// ```
+/// There are two ways to determine if a bit is set:
+/// ```dart
+/// bool bit4 = mask7.isSet(4);
+/// bool bit3 = mask7[3];
+/// ```
 /// Dart does not support generic enumerations, so Bitmask constructors
 /// and methods use integer arguments. It is possible to use enumerations
 /// with Bitmask by converting the emumeration values to integers as follows:
@@ -104,6 +109,9 @@ const int _maximumBitmaskSize = 63;
 ///
 ///   mask3.clear();
 ///   print('After mask3.clear(), mask3 = ${mask3.flags.toRadixString(2)}');
+///
+///   print('mask4 bit 4: ${mask4.isSet(4)}');
+///   print('mask4 bit 2: ${mask4[2]}');
 /// }
 ///
 /// // prints the following:
@@ -123,6 +131,8 @@ const int _maximumBitmaskSize = 63;
 /// // mask4 == mask3: true
 /// // identical(mask4, mask3): false
 /// // After mask3.clear(), mask3 = 0
+/// // mask4 bit 4: true
+/// // mask4 bit 2: false
 /// ```
 class Bitmask {
   /// Construct a bitmask with no bits set.

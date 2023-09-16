@@ -41,6 +41,9 @@ void main() {
 
   mask3.clear();
   print('After mask3.clear(), mask3 = ${mask3.flags.toRadixString(2)}');
+
+  print('mask4 bit 4: ${mask4.isSet(4)}');
+  print('mask4 bit 2: ${mask4[2]}');
 }
 
 // prints the following:
@@ -60,3 +63,5 @@ void main() {
 // mask4 == mask3: true
 // identical(mask4, mask3): false
 // After mask3.clear(), mask3 = 0
+// mask4 bit 4: true
+// mask4 bit 2: false
