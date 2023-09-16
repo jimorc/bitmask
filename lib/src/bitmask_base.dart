@@ -1,6 +1,129 @@
 const int _minimumBitmaskSize = 1;
 const int _maximumBitmaskSize = 63;
 
+/// A Bitmask class, which contains a collection of single bits.
+///
+/// There are four ways to construct a Bitmap object:
+/// ```dash
+/// // Create a Bitmask of 6 bits all set to 0
+/// final mask1 = Bitmask(6);
+/// // Create a Bitmask of 10 bits, with bits 1, 3, and 5 set to 1.
+/// final mask2 = Bitmask.fromInt(21, 10);
+/// // Create a Bitmask of 4 bits, with bits 1 and 3 set.
+/// final mask3 = Bitmask.fromList([1, 3], 4);
+/// // Create a Bitmask that is a deep copy of another.
+/// final mask4 = Bitmask.fromBitmask(mask2);
+/// ```
+/// There are two ways to set individual bits, and two ways to unset
+/// individual bits:
+/// ```dash
+/// // To set a bit, use either:
+/// mask2.set(4); // Set bit 4 to 1 (true);
+/// mask2[4] = true;  // Set the same bit to 1 (true)
+/// // To unset a bit, use either:
+/// mask2.unset(3);  // Set bit 3 to 0 (false)
+/// mask2[3] = false; // Set same bit to 0 (false)
+/// ```
+/// The normal bit-wise operations are supported:
+/// ```dash
+/// // Bit-wise AND.
+/// var mask5 = mask1 & mask2;
+/// // Bit-wise OR.
+/// var mask6 = mask1 | mask2;
+/// // Bit-wise XOR.
+/// var mask7 = mask1 ^ mask2;
+/// // Bit-wise NOT.
+/// var mask8 = ~mask1;
+///```
+///To convert to and from an integer:
+///```dash
+/// // Create an 8 bit Bitmask object with bits 1, 3, and 5 set.
+/// var mask9 = Bitmask.fromInt(21, 8);
+/// // Get integer value from Bitmask object
+/// var bits = mask9.flags; // bits contains value 21.
+/// ```
+/// To reset all bits in a Bitmask object to 0 (false), call clear().
+/// ```dash
+/// mask9.clear();  // mask9 now contains all zeroes.
+/// ```
+/// Dart does not support generic enumerations, so Bitmask constructors
+/// and methods use integer arguments. It is possible to use enumerations
+/// with Bitmask by converting the emumeration values to integers as follows:
+/// ```dash
+/// enum Maskbits { zero, one, two, three, four }
+///
+/// var mask1 = Bitmask(Maskbits.values().length);
+/// mask1[Maskbits.one.index] = true; // Set bit 1.
+/// // Create Bitmask object to hold all Maskbits, with bits 1 and 2 set to 1
+/// var mask2 = Bitmask.fromList([Maskbits.one.index, Maskbits.two.index],
+///     Maskbits.values().length);
+/// ```
+/// Here is a program that exercises the Bitmask class. It is the same
+/// as the example program:
+/// ```dash
+/// import 'package:bitmask/bitmask.dart';
+///
+/// enum Maskbits { zero, one, two, three, four }
+///
+/// void main() {
+///   var mask1 = Bitmask(6);
+///   // set bits 1 and 3.
+///   mask1[1] = true;
+///   mask1.set(3); // same as mask1[3] = true;
+///   // set, then unset bit 5
+///   mask1[5] = true;
+///   mask1.unset(5); // same as mask1[5] = false;
+///
+///   // sets bits 0, 2, and 3.
+///   var mask2 = Bitmask.fromInt(13, 6); // sets bits 0, 2, and 3.
+///
+///   // set bits 0, 3, and 4.
+///   var mask3 = Bitmask.fromList(
+///       [Maskbits.zero.index, Maskbits.three.index, Maskbits.four.index], 6);
+///
+///   print('mask1.flags = ${mask1.flags.toRadixString(2)}');
+///   print('mask2.flags = ${mask2.flags.toRadixString(2)}');
+///   print('mask3.flags = ${mask3.flags.toRadixString(2)}');
+///
+///   print('mask1 & mask2 = ${(mask1 & mask2).flags.toRadixString(2)}');
+///   print('mask1 & mask3 = ${(mask1 & mask3).flags.toRadixString(2)}');
+///   print('mask2 & mask3 = ${(mask2 & mask3).flags.toRadixString(2)}');
+///
+///   print('mask1 | mask2 = ${(mask1 | mask2).flags.toRadixString(2)}');
+///   print('mask1 | mask3 = ${(mask1 | mask3).flags.toRadixString(2)}');
+///   print('mask2 | mask3 = ${(mask2 | mask3).flags.toRadixString(2)}');
+///
+///   print('~mask1 = ${(~mask1).flags.toRadixString(2)}');
+///   print('~mask2 = ${(~mask2).flags.toRadixString(2)}');
+///   print('~mask3 = ${(~mask3).flags.toRadixString(2)}');
+///
+///   var mask4 = Bitmask.fromBitmask(mask3);
+///   print('mask4 = ${mask4.flags.toRadixString(2)}');
+///   print('mask4 == mask3: ${mask4 == mask3}');
+///   print('identical(mask4, mask3): ${identical(mask4, mask3)}');
+///
+///   mask3.clear();
+///   print('After mask3.clear(), mask3 = ${mask3.flags.toRadixString(2)}');
+/// }
+///
+/// // prints the following:
+/// // mask1.flags = 1010
+/// // mask2.flags = 1101
+/// // mask3.flags = 11001
+/// // mask1 & mask2 = 1000
+/// // mask1 & mask3 = 1000
+/// // mask2 & mask3 = 1001
+/// // mask1 | mask2 = 1111
+/// // mask1 | mask3 = 11011
+/// // mask2 | mask3 = 11101
+/// // ~mask1 = 110101
+/// // ~mask2 = 110010
+/// // ~mask3 = 100110
+/// // mask4 = 11001
+/// // mask4 == mask3: true
+/// // identical(mask4, mask3): false
+/// // After mask3.clear(), mask3 = 0
+/// ```
 class Bitmask {
   /// Construct a bitmask with no bits set.
   ///
