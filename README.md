@@ -1,14 +1,34 @@
 # bitmask
 
-bitmask is a Dart package for a generic Bitmask class.
+bitmask is a Dart package that provides a Bitmask class.
 
-Looking in pub.dev, there are two packages that are related to bitmasks:
-**enum_flag**, and **surf_util** which contains a Bitmask class. The **enum_flag** package is very barebones, and **surf_util** has been
-discontinued.
+## Introduction
 
-If I am successful in creating a good generic Bitmask class, I may publish
-it as a package, I may simply
-leave it here on GitHub, I may roll it into one of my other projects,
-or if unsuccessful, I will probably delete this repository. Be warned.
+A Bitmask object contains
+a collection of individual bits that may be set or not set (1 or 0).
+Constructors and methods are provided for setting and unsetting individual
+bits in a Bitmask and for applying operations such as bitwise ANDing, ORing, and XORing masks together, taking a bitwise complement, and for
+getting the
+integer value represented by the Bitmask object.
 
-Of course, you are more than welcome to fork this repository, or make contributions to it via pull requests.
+Bitmask objects are limited
+to representing 63 bits as this is the largest number of bits that can be
+contained in a Dart integer. If this class is used on the Web, the maximum
+number of bits should be limited to 52 as this is the largest number of bits
+that can be represented reliably by Javascript.
+
+## Status
+
+![Dart: &check;](https://img.shields.io/badge/Dart-&check;-darkgreen)
+![Flutter: &check;](https://img.shields.io/badge/Flutter-&check;-darkgreen)
+![Tests: 28/28 &check;](https://img.shields.io/badge/Tests-28/28_&check;-darkgreen)
+![Coverage: 100% &check;](https://img.shields.io/badge/Coverage-100%25_&check;-darkgreen)
+![Documentation: not complete](https://img.shields.io/badge/Documentation-incomplete-yellow)
+![Windows: not tested](https://img.shields.io/badge/Windows-%3F-yellow)
+![MacOS: &check;](https://img.shields.io/badge/MacOS-&check;-darkgreen)
+![Linux: not_tested](https://img.shields.io/badge/Linux-%3F-yellow)
+![iOS: not tested](https://img.shields.io/badge/iOS-%3F-yellow)
+![Android: not tested](https://img.shields.io/badge/Android-%3F-yellow)
+![Web: not tested](https://img.shields.io/badge/Web-%3F-yellow)
+
+? indicates that the library has not been tested on that OS.
