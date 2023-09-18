@@ -1,8 +1,8 @@
 name: bitmask
-description: A starting point for Dart libraries or applications.
+description: A library containing a Bitmask class.
 version: 1.0.0
-publish_to: none
 repository: https://github.com/jimorc/bitmask.git
+issue_tracker: https://github.com/jimorc/bitmask/issues
 
 environment:
   sdk: ^3.1.0
