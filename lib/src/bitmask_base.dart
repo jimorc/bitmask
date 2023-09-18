@@ -163,8 +163,8 @@ class Bitmask {
   ///
   /// _bits_ is the integer value to create the Bitmask for.
   ///
-  /// _size_ is the number of bits in the Bitmask. No check is made to
-  /// ensure that the size of the Bitmask is large enough to hold all
+  /// _numberOfBits_ is the number of bits in the Bitmask. No check is made
+  /// to ensure that the size of the Bitmask is large enough to hold all
   /// of the bits in _bits_. The minimum
   /// value for this argument is 1; a Bitmask of zero or a negative
   /// size does not make sense. The maximum
@@ -174,13 +174,14 @@ class Bitmask {
   /// can be reliably set in Javascript.
   ///
   /// throws ArgumentError is _size_ is not between 1 and 63.
-  factory Bitmask.fromInt(int bits, int size) {
-    if (size < _minimumBitmaskSize || size > _maximumBitmaskSize) {
+  factory Bitmask.fromInt(int bits, int numberOfBits) {
+    if (numberOfBits < _minimumBitmaskSize ||
+        numberOfBits > _maximumBitmaskSize) {
       throw ArgumentError('Bitmask.fromInt: Bitmask size must be between'
           ' 1 and 63.');
     }
-    Bitmask mask = Bitmask(size);
-    for (int i = 0; i < size; i++) {
+    Bitmask mask = Bitmask(numberOfBits);
+    for (int i = 0; i < numberOfBits; i++) {
       mask[i] = bits & 1 == 1;
       bits >>= 1;
     }
@@ -191,20 +192,21 @@ class Bitmask {
   ///
   /// _bits_ is the list of bits to set.
   ///
-  /// _size_ is the number of bits in this Bitmask.
+  /// _numberOfBits_ is the number of bits in this Bitmask.
   ///
   /// Throws ArgumentError if _size_ is not between 1 and 63.
   ///
   /// Throws ArgumentError if any entry in _bits_ is outside the range
   /// of 0 and _size_ - 1.
-  factory Bitmask.fromList(List<int> bits, int size) {
-    if (size < _minimumBitmaskSize || size > _maximumBitmaskSize) {
+  factory Bitmask.fromList(List<int> bits, int numberOfBits) {
+    if (numberOfBits < _minimumBitmaskSize ||
+        numberOfBits > _maximumBitmaskSize) {
       throw ArgumentError('Bitmask.fromList: Bitmask size must be between'
           ' 1 and 63.');
     }
-    var mask = Bitmask(size);
+    var mask = Bitmask(numberOfBits);
     for (var bit in bits) {
-      if (bit < _minimumBitmaskSize - 1 || bit >= size) {
+      if (bit < _minimumBitmaskSize - 1 || bit >= numberOfBits) {
         throw ArgumentError('Bitmask.fromList: Attempting to set a bit '
             'that is less than 0 or greater than the size of the Bitmask.');
       }
