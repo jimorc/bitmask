@@ -17,18 +17,40 @@ contained in a Dart integer. If this class is used on the Web, the maximum
 number of bits should be limited to 52 as this is the largest number of bits
 that can be represented reliably by Javascript.
 
-## Status
+Here is a simple example showing how to use the Bitmask class with
+enumerations:
 
-![Dart: &check;](https://img.shields.io/badge/Dart-&check;-darkgreen)
-![Flutter: &check;](https://img.shields.io/badge/Flutter-&check;-darkgreen)
-![Tests: 28/28 &check;](https://img.shields.io/badge/Tests-28/28_&check;-darkgreen)
-![Coverage: 100% &check;](https://img.shields.io/badge/Coverage-100%25_&check;-darkgreen)
-![Documentation: not complete](https://img.shields.io/badge/Documentation-incomplete-yellow)
-![Windows: not tested](https://img.shields.io/badge/Windows-%3F-yellow)
-![MacOS: &check;](https://img.shields.io/badge/MacOS-&check;-darkgreen)
-![Linux: not_tested](https://img.shields.io/badge/Linux-%3F-yellow)
-![iOS: not tested](https://img.shields.io/badge/iOS-%3F-yellow)
-![Android: not tested](https://img.shields.io/badge/Android-%3F-yellow)
-![Web: not tested](https://img.shields.io/badge/Web-%3F-yellow)
+```dart
+import 'package:bitmask/bitmask.dart';
 
-? indicates that the library has not been tested on that OS.
+enum Maskbits { zero, one, two, three, four, }
+
+void main() {
+  var mask1 = Bitmask.fromList([Maskbits.one.index, 
+      Maskbits.three.index],
+      Maskbits.values().length);
+  mask1[Maskbits.four] = true;
+  var mask2 = Bitmask.fromBitmask(mask1);
+  mask2.unset(Maskbits.three.index);
+  print(mask1.flags.toRadixString(2)); // prints 11010
+  print((mask1 & mask2).flags.toRadixString(2)); // prints 10010
+  print((mask1 | mask2).flags.toRadixString(2)); // prints 11010
+  print((mask1 ^ mask2).flags.toRadixString(2)); // prints 1000
+  print(~mask1.flags.toRadixString(2)); // prints 101
+}
+```
+
+## Installation
+
+Add `bitmask` to you `pubspec.yaml` file.
+
+```yaml
+dependencies:
+  bitmask: ^1.0.0
+```
+
+After saving the `pubspec.yaml` file, run:
+
+```bash
+dart pub update
+```
