@@ -2,7 +2,7 @@ name: bitmask
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 publish_to: none
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/jimorc/bitmask.git
 
 environment:
   sdk: ^3.1.0
