@@ -3,6 +3,7 @@ description: A library containing a Bitmask class.
 version: 1.0.0
 repository: https://github.com/jimorc/bitmask.git
 issue_tracker: https://github.com/jimorc/bitmask/issues
+documentation: https://jimorc.github.io/bitmask
 
 environment:
   sdk: ^3.1.0
