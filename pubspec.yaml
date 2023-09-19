@@ -1,7 +1,6 @@
 name: bitmask
-description:  Package for Bitmask objects that can be created, modified,
-combined with bitmask operations.
-version: 1.0.0
+description:  Package for Bitmask objects that can be created, modified, combined with bitmask operations.
+version: 1.0.1
 repository: https://github.com/jimorc/bitmask.git
 issue_tracker: https://github.com/jimorc/bitmask/issues
 documentation: https://jimorc.github.io/bitmask
