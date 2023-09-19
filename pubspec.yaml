@@ -1,5 +1,6 @@
 name: bitmask
-description: A library containing a Bitmask class.
+description:  Package for Bitmask objects that can be created, modified,
+combined with bitmask operations.
 version: 1.0.0
 repository: https://github.com/jimorc/bitmask.git
 issue_tracker: https://github.com/jimorc/bitmask/issues
