@@ -54,3 +54,8 @@ After saving the `pubspec.yaml` file, run:
 ```bash
 dart pub update
 ```
+
+## Contributions
+
+If you would like to contribute to the bitmask library, please see
+[CONTRIBUTING.md](https://github.com/jimorc/bitmask/blob/main/CONTRIBUTING.md).
